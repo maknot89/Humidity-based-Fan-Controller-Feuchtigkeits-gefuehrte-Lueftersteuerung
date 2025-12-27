@@ -1,28 +1,37 @@
 Humidity based FanController for 2 PWM Fans with 2 DHT22 Sensors created with ChatGPT
 
-I needed a Way to control the Humidity in my Basement Workshop but I found nothing on the Internet that suited my needs so I consulted ChatGBT actually for the first Time ^^
-After many Weeks and many many Versions and Issues I am now happy with the Code and how it is working.
-I am using it with two Noctua Industrial Fans and a Condeser Dryer Heat Exchanger the ForceFanPin is planed for a Soldering Smoke Extraction
+I needed a way to control the humidity in my basement workshop, but I couldn’t find anything online that suited my needs. So I consulted ChatGPT — actually for the first time 😄
+After many weeks, countless versions, and plenty of issues, I am now happy with the code and how it works.
+
+The system is currently running with two Noctua Industrial fans and a condenser dryer heat exchanger. The ForceFanPin is planned for a soldering smoke extraction system.
 
 Features:
 
-- Two DHT22 Sensors for Room and Intake Air Temperature and Humidity
-- The Sensors are Calibratable with 2 Values per Sensor
-- HumOffset sets how much higher the Humidity on the Inside can be in comparisson to the Intake before the Fans ramp up
-- If MinHumidity is reached the Fans spin with MinPWM
-- If FanOffHumidity is reached the Fans turn Off until MinHumidity is reached again 
-- Two PWM Fans for Intake and Outlet with RPM Display
-- Setting a minPWM, maxPWM and an FanOffset to let the Intake spin a bit faster
-- The Code is designt for a LCD1602 + I2C, 3 Buttons (Menue,+ and -) an an Status LED
-- Pin 4 is forcing the Fans to 100% if pulled to Ground
-- Pin 5 is pulled high if PreheatTemp is reached with a Hysteresis of +1 Degree
-- The PID Values can be canched in the Menue
-- The LED is pulsing in normal Mode, slowly flashing if the Fans are off and rapidly flashing if there is a Sensor Error
-- If no Buttons is pressed for 10 Second while in Menue it is exited automaticly
-- The Display turns off after 30 Seconds with no Input
-- The Values are only written to the EEPROM when leaving the Menue to protect it from unnecessary Writes
-- You can change the LEDs on, off and pulsing Times on Top of the Code
+- Two DHT22 sensors for room and intake air temperature and humidity
+- Sensors can be calibrated using two values per sensor
+- HumOffset defines how much higher the indoor humidity may be compared to the intake air before the fans ramp up
+- If MinHumidity is reached, the fans run at MinPWM
+- If FanOffHumidity is reached, the fans turn off until MinHumidity is reached again
+- Two PWM-controlled fans (intake and outlet) with RPM display
+- Configurable MinPWM, MaxPWM, and a FanOffset to make the intake fan run slightly faster
+- Code is designed for an LCD1602 with I²C, three buttons (Menu, +, −), and a status LED
+- Pin 4 forces both fans to 100% when pulled to ground
+- Pin 5 goes high when PreheatTemp is reached, with a hysteresis of +1 °C
+- PID values can be changed in the menu
+- Status LED behavior:
+  > Pulsing in normal operation
+  > Slow flashing when the fans are off
+  > Rapid flashing if a sensor error occurs
+- If no button is pressed for 10 seconds while in the menu, it exits automatically
+- The display turns off after 30 seconds without input
+- Values are written to EEPROM only when leaving the menu to avoid unnecessary writes
+- LED on/off and pulsing timings can be adjusted at the top of the code
 
-I Hope someone finds this helpfull and can use my Code
 
-For Calibrating I Placed the Sensors in a sealed Container with dried Silica Gel a few Hours for the Low Value (should be around 10%) and with saturated Table Salt Water for the High Value (should be around 75%)
+I hope someone finds this helpful and can make use of my code.
+
+
+For calibration, I placed the sensors in a sealed container:
+
+- With dried silica gel for several hours to get the low value (≈10% RH)
+- With saturated salt water (table salt) for the high value (≈75% RH)
