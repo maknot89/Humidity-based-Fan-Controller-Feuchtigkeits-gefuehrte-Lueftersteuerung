@@ -19,9 +19,9 @@ Features:
 - Pin 5 goes high when PreheatTemp is reached, with a hysteresis of +1 °C
 - PID values can be changed in the menu
 - Status LED behavior:
-  > Pulsing in normal operation
-  > Slow flashing when the fans are off
-  > Rapid flashing if a sensor error occurs
+  - Pulsing in normal operation
+  - Slow flashing when the fans are off
+  - Rapid flashing if a sensor error occurs
 - If no button is pressed for 10 seconds while in the menu, it exits automatically
 - The display turns off after 30 seconds without input
 - Values are written to EEPROM only when leaving the menu to avoid unnecessary writes
