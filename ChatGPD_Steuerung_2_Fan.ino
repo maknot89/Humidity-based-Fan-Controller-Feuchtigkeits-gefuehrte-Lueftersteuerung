@@ -27,7 +27,7 @@ struct Button {
   unsigned long lastChange;
   unsigned long pressStart;
   bool longHandled;
-  unsigned long lastRepeat;   // NEW: for repeat timing
+  unsigned long lastRepeat;
 };
 
 
@@ -216,8 +216,8 @@ void loop() {
 
 // ------------------- Display Timeout + Auto-Exit Menu -------------------
 if(displayOn) {
-    // Menü automatisch verlassen kurz vor Display-Off
-    if(inMenu && now - lastInputTime > 10000){ // 10 Sekunden
+    // automatically exiting the menue before display-off
+    if(inMenu && now - lastInputTime > 10000){
         inMenu = false;
         EEPROM.put(ADDR_MINPWM,minPWM_percent);
         EEPROM.put(ADDR_MAXPWM,maxPWM_percent);
@@ -236,7 +236,7 @@ if(displayOn) {
         menuNeedsRedraw = true;
     }
 
-    // Display ausschalten nach 30 Sekunden
+    // display timeout after 30 Seconds
     if(now - lastInputTime > 30000){
         lcd.noDisplay();
         lcd.noBacklight();
@@ -327,20 +327,19 @@ void updateLED(unsigned long now) {
   if (!sensorReady) { // Fast blink
     if (now - lastBlink >= (ledState ? blinkFastOn : blinkFastOff)) {
       ledState = !ledState;
-      analogWrite(LED_PIN, ledState ? ledMax : ledMin); // Max/Min statt full PWM
+      analogWrite(LED_PIN, ledState ? ledMax : ledMin);
       lastBlink = now;
     }
   } 
   else if (fansStopped) { // Slow blink
     if (now - lastBlink >= (ledState ? blinkSlowOn : blinkSlowOff)) {
       ledState = !ledState;
-      analogWrite(LED_PIN, ledState ? ledMax : ledMin); // Max/Min statt full PWM
+      analogWrite(LED_PIN, ledState ? ledMax : ledMin);
       lastBlink = now;
     }
   } 
-  else { // Pulsieren
-    float t = (float)(now % pulsePeriod) / pulsePeriod; // 0..1 innerhalb Periode
-    // Sinusförmig zwischen ledMin und ledMax
+  else { // Pulsing
+    float t = (float)(now % pulsePeriod) / pulsePeriod;
     ledBrightness = ledMin + (ledMax - ledMin) * 0.5 * (1 + sin(2 * PI * t - PI/2)); 
     analogWrite(LED_PIN, (int)ledBrightness);
   }
@@ -530,7 +529,7 @@ if(btnMenu.stableState == LOW &&
   }
   menuNeedsRedraw = true;
 }
-// Slope/Offset neu berechnen
+// Slope/Offset calculation
 if(hinHigh - hinLow != 0) hinSlope = 75.0 / (hinHigh - hinLow);
 else hinSlope = 1.0;
 hinOffset = -hinLow * hinSlope;
